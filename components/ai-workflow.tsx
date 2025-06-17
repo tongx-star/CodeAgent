@@ -98,8 +98,8 @@ export function AIWorkflow() {
         isRunning: false
       }))
 
-    } catch (error: any) {
-      if (error.name === 'AbortError') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'AbortError') {
         setStatus(prev => ({
           ...prev,
           isRunning: false,
@@ -109,7 +109,7 @@ export function AIWorkflow() {
         setStatus(prev => ({
           ...prev,
           isRunning: false,
-          error: error.message
+          error: error instanceof Error ? error.message : '未知错误'
         }))
       }
     }

@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('工作流API错误:', error)
     return NextResponse.json(
-      { error: `服务器错误: ${error.message}` },
+      { error: `服务器错误: ${error instanceof Error ? error.message : '未知错误'}` },
       { status: 500 }
     )
   }

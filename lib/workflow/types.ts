@@ -6,7 +6,7 @@ export interface WorkflowContext {
   // 用户输入
   input: {
     prompt: string;
-    options?: Record<string, any>;
+    options?: Record<string, string | number | boolean>;
   };
   // 中间状态
   state?: {

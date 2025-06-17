@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       console.error('获取AI客户端失败:', error)
       return NextResponse.json(
-        { error: `AI客户端创建失败: ${error.message}` },
+        { error: `AI客户端创建失败: ${error instanceof Error ? error.message : '未知错误'}` },
         { status: 500 }
       )
     }
@@ -70,15 +70,17 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('聊天API错误:', error)
     
+    const errorMessage = error instanceof Error ? error.message : '未知错误'
+    
     // 根据错误类型返回不同的错误信息
-    if (error.message?.includes('API key')) {
+    if (errorMessage.includes('API key')) {
       return NextResponse.json(
         { error: 'API密钥无效，请检查配置' },
         { status: 401 }
       )
     }
     
-    if (error.message?.includes('rate limit')) {
+    if (errorMessage.includes('rate limit')) {
       return NextResponse.json(
         { error: 'API调用频率超限，请稍后重试' },
         { status: 429 }
@@ -86,7 +88,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { error: `服务器错误: ${error.message}` },
+      { error: `服务器错误: ${errorMessage}` },
       { status: 500 }
     )
   }

@@ -5,20 +5,20 @@ import { reviewCode } from './steps/review'
 import { WorkflowContext } from './types'
 
 // 完整的代码生成工作流
-export const codeGenerationWorkflow = pipe<WorkflowContext, WorkflowContext>(
+export const codeGenerationWorkflow = pipe<WorkflowContext>(
   withTiming('需求分析', withErrorHandling(analyzeRequirement)),
   withTiming('代码生成', withErrorHandling(generateCode)),
   withTiming('代码审查', withErrorHandling(reviewCode))
 )
 
 // 简化的代码生成工作流（不包含审查）
-export const simpleCodeGenWorkflow = pipe<WorkflowContext, WorkflowContext>(
+export const simpleCodeGenWorkflow = pipe<WorkflowContext>(
   withTiming('需求分析', withErrorHandling(analyzeRequirement)),
   withTiming('代码生成', withErrorHandling(generateCode))
 )
 
 // 只分析需求的工作流
-export const requirementAnalysisWorkflow = pipe<WorkflowContext, WorkflowContext>(
+export const requirementAnalysisWorkflow = pipe<WorkflowContext>(
   withTiming('需求分析', withErrorHandling(analyzeRequirement))
 )
 
